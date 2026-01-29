@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  honeypy:
+    build: .
+    container_name: honeypy
+    restart: unless-stopped
+    network_mode: host  # Necessário para acessar logs do host
+    cap_add:
+      - NET_ADMIN  # Necessário para iptables
+    volumes:
+      - ./config:/etc/honeypy:ro
+      - honeypy_data:/var/lib/honeypy
+      - honeypy_logs:/var/log/honeypy
+      - /var/log:/host_logs:ro  # Monta logs do host
+    environment:
+      - HONEYPY_CONFIG=/etc/honeypy/config.json
+      - TZ=America/Sao_Paulo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Interface web opcional
+  honeypy-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: honeypy-web
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - honeypy_data:/var/lib/honeypy:ro
+    depends_on:
+      - honeypy
+    environment:
+      - HONEYPY_API=http://honeypy:8080/api
+
+  # Banco de dados para histórico (opcional)
+  postgres:
+    image: postgres:14-alpine
+    container_name: honeypy-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: honeypy
+      POSTGRES_USER: honeypy
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U honeypy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  honeypy_data:
+    driver: local
+  honeypy_logs:
+    driver: local
+  postgres_data:
+    driver: local

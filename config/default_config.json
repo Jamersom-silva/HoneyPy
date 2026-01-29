@@ -1,0 +1,84 @@
+{
+    "system": {
+        "name": "HoneyPy",
+        "version": "1.0.0",
+        "mode": "production"
+    },
+    
+    "monitoring": {
+        "enabled": true,
+        "interval_seconds": 10,
+        "log_retention_days": 30,
+        "report_retention_days": 90
+    },
+    
+    "detection": {
+        "window_minutes": 10,
+        "thresholds": {
+            "ssh": {
+                "max_attempts": 5,
+                "time_window_minutes": 5
+            },
+            "ftp": {
+                "max_attempts": 10,
+                "time_window_minutes": 10
+            },
+            "http": {
+                "max_attempts": 20,
+                "time_window_minutes": 10
+            },
+            "mysql": {
+                "max_attempts": 3,
+                "time_window_minutes": 10
+            }
+        },
+        "auto_block": false,
+        "block_duration_hours": 24
+    },
+    
+    "logging": {
+        "enabled": true,
+        "level": "INFO",
+        "directory": "/var/log/honeypy",
+        "max_size_mb": 100,
+        "backup_count": 5
+    },
+    
+    "paths": {
+        "log_files": {
+            "ssh": "/var/log/auth.log",
+            "ftp": "/var/log/vsftpd.log",
+            "apache": "/var/log/apache2/access.log",
+            "nginx": "/var/log/nginx/access.log",
+            "mysql": "/var/log/mysql/error.log"
+        },
+        "data_directory": "/var/lib/honeypy",
+        "reports_directory": "/var/lib/honeypy/reports"
+    },
+    
+    "notifications": {
+        "enabled": false,
+        "email": {
+            "smtp_server": "smtp.example.com",
+            "smtp_port": 587,
+            "username": "honeypy@example.com",
+            "password": "",
+            "recipients": ["admin@example.com"]
+        },
+        "slack": {
+            "webhook_url": "",
+            "channel": "#security-alerts"
+        },
+        "telegram": {
+            "bot_token": "",
+            "chat_id": ""
+        }
+    },
+    
+    "api": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "port": 8080,
+        "auth_token": ""
+    }
+}
