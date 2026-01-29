@@ -1,0 +1,63 @@
+{
+    "system": {
+        "name": "HoneyPy",
+        "version": "1.0.0",
+        "mode": "development",
+        "api": {
+            "enabled": true,
+            "host": "127.0.0.1",
+            "port": 8081,
+            "auth_token": "development_token"
+        }
+    },
+    "monitoring": {
+        "enabled": true,
+        "interval_seconds": 30,
+        "log_retention_days": 7,
+        "report_retention_days": 30
+    },
+    "detection": {
+        "window_minutes": 2,
+        "max_attempts": 2,
+        "thresholds": {
+            "ssh": {
+                "max_attempts": 2,
+                "time_window_minutes": 1
+            },
+            "test": {
+                "max_attempts": 2,
+                "time_window_minutes": 1
+            }
+        },
+        "auto_block": false,
+        "block_duration_hours": 1,
+        "ignore_private_ips": false
+    },
+    "logging": {
+        "enabled": true,
+        "level": "DEBUG",
+        "directory": "./logs",
+        "max_size_mb": 10,
+        "backup_count": 3,
+        "formatter": "colored"
+    },
+    "paths": {
+        "log_files": {
+            "test": [
+                "./tests/fixtures/sample_logs/auth.log",
+                "./tests/fixtures/sample_logs/access.log"
+            ]
+        },
+        "data_directory": "./data",
+        "reports_directory": "./data/reports"
+    },
+    "notifications": {
+        "enabled": false
+    },
+    "geoip": {
+        "enabled": false
+    },
+    "log_types": [
+        "test"
+    ]
+}

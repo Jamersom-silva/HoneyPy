@@ -1,0 +1,110 @@
+{
+    "system": {
+        "name": "HoneyPy",
+        "version": "1.0.0",
+        "mode": "production",
+        "api": {
+            "enabled": false,
+            "host": "127.0.0.1",
+            "port": 8080,
+            "auth_token": "CHANGE_THIS_IN_PRODUCTION"
+        }
+    },
+    "monitoring": {
+        "enabled": true,
+        "interval_seconds": 5,
+        "log_retention_days": 90,
+        "report_retention_days": 365
+    },
+    "detection": {
+        "window_minutes": 5,
+        "max_attempts": 3,
+        "thresholds": {
+            "ssh": {
+                "max_attempts": 3,
+                "time_window_minutes": 2
+            },
+            "ftp": {
+                "max_attempts": 5,
+                "time_window_minutes": 5
+            },
+            "http": {
+                "max_attempts": 10,
+                "time_window_minutes": 5
+            },
+            "mysql": {
+                "max_attempts": 2,
+                "time_window_minutes": 5
+            }
+        },
+        "auto_block": true,
+        "block_duration_hours": 24,
+        "ignore_private_ips": true
+    },
+    "logging": {
+        "enabled": true,
+        "level": "WARNING",
+        "directory": "/var/log/honeypy",
+        "max_size_mb": 1000,
+        "backup_count": 10,
+        "formatter": "json"
+    },
+    "paths": {
+        "log_files": {
+            "ssh": [
+                "/var/log/auth.log",
+                "/var/log/secure",
+                "/var/log/messages"
+            ],
+            "ftp": [
+                "/var/log/vsftpd.log",
+                "/var/log/proftpd/auth.log",
+                "/var/log/xferlog"
+            ],
+            "apache": [
+                "/var/log/apache2/access.log",
+                "/var/log/apache2/error.log",
+                "/var/log/httpd/access_log",
+                "/var/log/httpd/error_log"
+            ],
+            "nginx": [
+                "/var/log/nginx/access.log",
+                "/var/log/nginx/error.log"
+            ],
+            "mysql": [
+                "/var/log/mysql/error.log",
+                "/var/log/mysql/mysql.log"
+            ]
+        },
+        "data_directory": "/var/lib/honeypy",
+        "reports_directory": "/var/lib/honeypy/reports"
+    },
+    "notifications": {
+        "enabled": true,
+        "email": {
+            "smtp_server": "smtp.company.com",
+            "smtp_port": 587,
+            "username": "honeypy@company.com",
+            "password": "",
+            "recipients": [
+                "security@company.com",
+                "admin@company.com"
+            ],
+            "tls": true
+        }
+    },
+    "geoip": {
+        "enabled": true,
+        "database_path": "/var/lib/honeypy/databases/geoip/geolite2.db",
+        "auto_download": true,
+        "update_frequency_days": 7,
+        "cache_size": 50000
+    },
+    "log_types": [
+        "ssh",
+        "ftp",
+        "apache",
+        "nginx",
+        "mysql"
+    ]
+}

@@ -1,0 +1,48 @@
+[Unit]
+Description=HoneyPy - Sistema de Detecção de Ataques de Brute Force
+Documentation=https://github.com/yourusername/honeypy
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=honeypy
+Group=honeypy
+RuntimeDirectory=honeypy
+RuntimeDirectoryMode=0750
+
+Environment=PYTHONUNBUFFERED=1
+Environment=HONEYPY_CONFIG=/etc/honeypy/config.json
+
+WorkingDirectory=/opt/honeypy
+ExecStart=/usr/local/bin/honeypy --monitor --config /etc/honeypy/config.json
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/kill -TERM $MAINPID
+
+Restart=on-failure
+RestartSec=10
+StartLimitInterval=60
+StartLimitBurst=3
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=honeypy
+
+# Security
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/honeypy /var/lib/honeypy
+ReadOnlyPaths=/etc/honeypy
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_RAW
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_RAW
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=65536
+MemoryMax=512M
+CPUQuota=50%
+
+[Install]
+WantedBy=multi-user.target
