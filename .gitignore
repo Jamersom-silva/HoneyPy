@@ -1,0 +1,81 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+attack_attempts.json
+log_positions.json
+
+# Configurações locais
+config/local_config.json
+*.local
+
+# Banco de dados
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup
+*.bak
+*.backup
+
+# Docker
+docker-compose.override.yml
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Testes
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Instalação
+honeypy.egg-info/
+
+# Dados temporários
+data/state/
+data/logs/*.log
+data/reports/*.json
+!data/reports/.gitkeep
+!data/logs/.gitkeep
+!data/state/.gitkeep
+
+# Backup do crontab
+/tmp/honeypy_cron

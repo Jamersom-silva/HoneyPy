@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "honeypy"
+version = "1.0.0"
+description = "Sistema de detecção de ataques de brute force"
+readme = "README.md"
+authors = [{name = "Seu Nome", email = "seu@email.com"}]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: System Administrators",
+    "Topic :: Security",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "python-iptables>=1.0.0",
+    "requests>=2.28.0",
+    "python-dateutil>=2.8.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "isort>=5.12.0",
+]
+web = [
+    "flask>=2.0.0",
+    "flask-cors>=3.0.0",
+    "jinja2>=3.0.0",
+]
+geoip = [
+    "geoip2>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/seuusuario/honeypy"
+Documentation = "https://github.com/seuusuario/honeypy/docs"
+Repository = "https://github.com/seuusuario/honeypy"
+Issues = "https://github.com/seuusuario/honeypy/issues"
+
+[project.scripts]
+honeypy = "src.honeypy:main"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
